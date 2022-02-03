@@ -1,24 +1,28 @@
-package com.example.newsdaily
+package com.example.Newspaper
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.newsdaily.databinding.ActivityMainBinding
 
 
-class MainActivity : AppCompatActivity(), NewsItemClicked {
+class MainActivity : AppCompatActivity(){
     private lateinit var recyclerView: RecyclerView
     private lateinit var Adapter:NewsListAdapter
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding= ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val recyclerView=findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager=LinearLayoutManager(this)
+        binding.recyclerView.layoutManager=LinearLayoutManager(this)
         val items=fetchData()
-        val Adapter=NewsListAdapter(items,this)
-        recyclerView.adapter=Adapter
+        val Adapter=NewsListAdapter(items)
+        binding.recyclerView.adapter=Adapter
 
     }
 
@@ -33,8 +37,6 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
         return list
     }
 
-    override fun OnItemClicked(item: String) {
-        Toast.makeText(this,"Clicked item is $item",Toast.LENGTH_LONG).show()
-    }
+
 
 }

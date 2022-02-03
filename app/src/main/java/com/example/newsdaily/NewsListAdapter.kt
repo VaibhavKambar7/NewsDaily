@@ -1,25 +1,25 @@
-package com.example.newsdaily
+package com.example.Newspaper
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.newsdaily.databinding.ItemsNewsBinding
 
-class NewsListAdapter(private val items: ArrayList<String>,private val listener:NewsItemClicked): RecyclerView.Adapter<NewsViewHolder>() {
-override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-    val view = LayoutInflater.from(parent.context).inflate(R.layout.items_news,parent,false)
-    val viewHolder=NewsViewHolder(view)
-    view.setOnClickListener{
-        listener.OnItemClicked(items[viewHolder.adapterPosition])
+class NewsListAdapter(private val items: ArrayList<String>): RecyclerView.Adapter<NewsViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
+
+//        }
+        return NewsViewHolder(ItemsNewsBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+
     }
-    return viewHolder
-}
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
 
-        val currentItem=items[position]
-        holder.titleView.text=currentItem
+
+
+        holder.bind(items[position])
 
     }
 
@@ -30,11 +30,11 @@ override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolde
     }
 }
 
-class NewsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-    val titleView: TextView=itemView.findViewById(R.id.title)
-}
-
-interface NewsItemClicked
+class NewsViewHolder(val binding: ItemsNewsBinding): RecyclerView.ViewHolder(binding.root)
 {
-    fun OnItemClicked(item: String)
+    fun bind(items:String)
+    {
+        binding.title.text=items
+    }
+
 }
